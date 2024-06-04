@@ -94,8 +94,8 @@ int main(int argc, char** argv) {
   // possible different states.  We are going to number each state
   cout << "Possible states:" << endl;
   int count = 0;
-  for(unsigned a=0;a<=Ca;++a) {
-    for(unsigned b=0;b<=Cb;++b) {
+  for (unsigned a=0;a<=Ca;++a) {
+    for (unsigned b=0;b<=Cb;++b) {
       cout << "State " << (count++) << ": (" << a << ',' << b << ")" << endl;
     }
   }
