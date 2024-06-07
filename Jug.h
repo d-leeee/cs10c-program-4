@@ -101,7 +101,7 @@ class Jug {
                             // Returns 1 if solution found and stores solution steps in string
     private:
         // Helper functions
-        unsigned stateNumber(unsigned, unsigned, unsigned, unsigned);                                      // Create new state of jugs
+        unsigned stateNumber(const unsigned&, const unsigned&, const unsigned&, const unsigned&) const ;                                      // Create new state of jugs
         void updateDistance(priority_queue<compareState, vector<compareState>, greater<compareState>>&,    // Find shortest distance and update 
             vector<State>& states, const unsigned&, const unsigned&, const unsigned&, const string& step);
 

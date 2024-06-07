@@ -6,7 +6,7 @@
 
 using namespace std;
 
-unsigned Jug::stateNumber(unsigned a, unsigned b, unsigned Ca, unsigned Cb) {
+unsigned Jug::stateNumber(const unsigned& a, const unsigned& b, const unsigned& Ca, const unsigned& Cb) const {
     return a * (Cb + 1) + b;
 }
 
