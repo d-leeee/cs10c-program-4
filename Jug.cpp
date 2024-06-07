@@ -113,12 +113,12 @@ void Jug::updateDistance(priority_queue<compareState, vector<compareState>, grea
 }
 
 // Create state number of jugs
-const unsigned Jug::stateNumber(const unsigned& a, const unsigned& b, const unsigned& Ca, const unsigned& Cb) const {
+unsigned Jug::stateNumber(const unsigned& a, const unsigned& b, const unsigned& Ca, const unsigned& Cb) const {
     return a * (Cb + 1) + b;
 }
 
 // Create every possible state
-vector<State> Jug::createStates() {
+const vector<State> Jug::createStates() {
 
     vector<State> states; // Stores every possible state of jugs
 
