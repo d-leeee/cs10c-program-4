@@ -1,14 +1,26 @@
 #pragma once
 
 #include <string>
+#include <limits>
+#include <vector>
+#include <queue>
 
+using std::vector;
 using std::string;
 
 const unsigned infinity = std::numeric_limits<unsigned>::max();
 
+struct compareState {
+    unsigned current;
+    unsigned distance;
+    bool operator>(const compareState& rhs) const {
+        return distance > rhs.distance;
+    }
+};
+
 struct State {
-    int a; // Amount in jug A
-    int b; // Amount in jug B
+    unsigned a; // Amount in jug A
+    unsigned b; // Amount in jug B
 
     // Where to go on each of the six actions
     unsigned fillA;
@@ -22,6 +34,7 @@ struct State {
     unsigned previous;
     unsigned distance;
     bool visited;
+    string action;
 
     State(unsigned a=infinity,
         unsigned b=infinity,
@@ -46,31 +59,28 @@ struct State {
 
 class Jug {
     private:
-        int Ca, Cb, N, cfA, cfB, ceA, ceB, cpAB, cpBA;
+        unsigned Ca, Cb, N, cfA, cfB, ceA, ceB, cpAB, cpBA;
+        vector<State> states;
 
     public:
         // Constructor
-        Jug(int Ca, int Cb, int N, int cfA, int cfB, int ceA, int ceB, int cpAB, int cpBA) :
+        Jug(unsigned Ca, unsigned Cb, unsigned N, unsigned cfA, unsigned cfB, unsigned ceA, unsigned ceB, unsigned cpAB, unsigned cpBA) :
             Ca(Ca), Cb(Cb), N(N), cfA(cfA), cfB(cfB), ceA(ceA), ceB(ceB), cpAB(cpAB), cpBA(cpBA) {}
 
+        /*
         // Rule of three
-        ~Jug();
+        ~Jug(); 
         Jug(const Jug&) = delete;
         Jug& operator=(const Jug&) = delete;
+        */
 
         // Mutator functions
-        int solve(const string&); // Check input and find solution
+        int solve(string&); // Check input and find solution
                                   // Returns -1 if invalid input, empty string
                                   // Returns 0 if valid input but no solution
                                   // Returns 1 if solution found and stores solution steps in string
     private:
-        unsigned state_number(unsigned a, unsigned b, unsigned Ca, unsigned Cb) {
-            // Simple error handling.  In the program you'll never be out of
-            // bounds
-            if (a > Ca or b > Cb) {
-                throw std::runtime_error("domain error");
-            }
+        unsigned stateNumber(unsigned, unsigned, unsigned, unsigned);
+        void updateDistance(std::priority_queue<compareState, vector<compareState>, std::greater<compareState>>&, vector<State>& states, const unsigned&, const unsigned&, const unsigned&, const string& step);
 
-            return a*(Cb+1)+b;
-        }
 };
