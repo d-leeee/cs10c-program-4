@@ -33,7 +33,7 @@ int Jug::solve(string& solution) {
     while (!q.empty()) {
 
         unsigned current = q.top().current; // Highest priority 
-        q.pop();                            // Remove lowest priority
+        q.pop();                            // Remove highest priority
 
         // If goal reached
         if (states[current].b == N && states[current].a == 0) {
