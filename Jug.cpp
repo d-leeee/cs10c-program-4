@@ -15,7 +15,8 @@ int Jug::solve(string& solution) {
     solution = ""; // Set default solution
 
     // Check if input is valid
-    if (!validParameters()) {
+    if (validParameters()) {
+        cout << "Invalid parameters." << endl;
         return -1;
     }
 
@@ -101,15 +102,9 @@ int Jug::solve(string& solution) {
     return 0; 
 }
 
-// Find shortest distance and update 
-void Jug::updateDistance(priority_queue<compareState, vector<compareState>, greater<compareState>>& q, vector<State>& states, const unsigned& currentDistance, const unsigned& cost, const unsigned& current, const string& step) {
-    
-    if (cost < states[currentDistance].distance) {
-        states[currentDistance].distance = cost;
-        states[currentDistance].previous = current;
-        states[currentDistance].action = step;
-        q.push({currentDistance, cost});
-    }
+// Check if parameters are valid
+bool Jug::validParameters() const {
+    return Ca <= 0 || Cb <= 0 || cfA < 0 || cfB < 0 || ceA < 0 || ceB < 0 || cpAB < 0 || cpAB < 0 || !(0 < Ca && Ca <= Cb) || !(N <= Cb && Cb <= 1000);
 }
 
 // Create state number of jugs
@@ -120,7 +115,7 @@ unsigned Jug::stateNumber(const unsigned& a, const unsigned& b, const unsigned& 
 // Create every possible state
 const vector<State> Jug::createStates() {
 
-    vector<State> states; // Stores every possible state of jugs
+    vector<State> states; // Store every state
 
     // Create every possible state in which the jugs can be in and add to vector
     for (unsigned a = 0; a <= Ca; a++) {
@@ -147,26 +142,13 @@ const vector<State> Jug::createStates() {
     return states;
 }
 
-// Check if parameters are valid
-bool Jug::validParameters() const {
-
-    // If negative capacities
-    if (Ca <= 0 || Cb <= 0) {
-        cout << "Capacity can't be negative." << endl;
-        return false;
-    }
-
-    // If costs are negative
-    else if (cfA < 0 || cfB < 0 || ceA < 0 || ceB < 0 || cpAB < 0 || cpAB < 0) {
-        cout << "Costs can't be negative." << endl;
-        return false;
-    }
-
-    // If jug A is greater than jug B
-    // If goal is greater than jug B
-    // If jug B is greater than 1000
-    else if (!(0 < Ca && Ca <= Cb) || !(N <= Cb && Cb <= 1000)) {
-        cout << "Jug A and goal can't be greater than jug B, and jug B can't be greater than 1000." << endl;
-        return false;
+// Find shortest distance and update 
+void Jug::updateDistance(priority_queue<compareState, vector<compareState>, greater<compareState>>& q, vector<State>& states, const unsigned& currentDistance, const unsigned& cost, const unsigned& current, const string& step) {
+    
+    if (cost < states[currentDistance].distance) {
+        states[currentDistance].distance = cost;
+        states[currentDistance].previous = current;
+        states[currentDistance].action = step;
+        q.push({currentDistance, cost});
     }
 }

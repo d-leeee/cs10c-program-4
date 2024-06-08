@@ -9,20 +9,21 @@ using std::vector;
 using std::string;
 using std::priority_queue;
 using std::greater;
+using std::numeric_limits;
 
-const unsigned infinity = std::numeric_limits<unsigned>::max(); // Default distance of vertices should be infinity
+const unsigned infinity = numeric_limits<unsigned>::max(); // Default distance of vertices should be infinity
 
 // Comparison struct for min heap priority queue
 struct compareState {
-    unsigned current;                               // Current index
-    unsigned distance;                              // Current distance to next vertex
-    bool operator>(const compareState& rhs) const { // Compare current distance to new distance
-        return distance > rhs.distance;
-    }
+
+    unsigned current;                                                                 // Current index
+    unsigned distance;                                                                // Current distance to next vertex
+    bool operator>(const compareState& rhs) const { return distance > rhs.distance; } // Compare current distance to new distance
 };
 
 // State struct for current state of water in jug
 struct State {
+    
     unsigned a; // Amount in jug A
     unsigned b; // Amount in jug B
 
@@ -64,16 +65,17 @@ struct State {
 
 // Assign the jug's capacities, goal, costs
 class Jug {
+
     private:
+
         unsigned Ca, Cb, N, cfA, cfB, ceA, ceB, cpAB, cpBA; // Ca & Cb are the capacities of jugs a & b respectively
                                                             // N is the goal that jug b wants to reach (jug a will be empty)
                                                             // cfA, cfB are the costs to fill a jug
                                                             // ceA, ceB are the costs to empty a jug
                                                             // cpAB, cpBA are the costs to transfer water from one jug to another
 
-        vector<State> states; // Stores every state the jugs could be in
-
     public:
+
         // Constructor
         Jug(const unsigned& Ca, 
             const unsigned& Cb, 
@@ -100,11 +102,12 @@ class Jug {
                             // Returns 0 if valid input but no solution
                             // Returns 1 if solution found and stores solution steps in string
     private:
+
         // Helper functions
-        unsigned stateNumber(const unsigned&, const unsigned&, const unsigned&, const unsigned&) const ;   // Create state number of jugs
-        void updateDistance(priority_queue<compareState, vector<compareState>, greater<compareState>>&,    // Find shortest distance and update 
-            vector<State>& states, const unsigned&, const unsigned&, const unsigned&, const string& step);
-        const vector<State> createStates();                                                                      // Create every possible state
-        bool validParameters() const;                                                                      // Check if parameters are valid                                                                            
+        bool validParameters() const;                                                                          // Check if parameters are valid                                                                            
+        unsigned stateNumber(const unsigned&, const unsigned&, const unsigned&, const unsigned&) const;        // Create state number of jugs
+        const vector<State> createStates();                                                                    // Create every possible state
+        void updateDistance(priority_queue<compareState, vector<compareState>, greater<compareState>>&,        // Find shortest distance and update 
+                            vector<State>&, const unsigned&, const unsigned&, const unsigned&, const string&); 
 
 };
